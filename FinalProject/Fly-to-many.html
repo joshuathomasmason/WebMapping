@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Fly to a location</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet' />
+    
+    <style>
+        /* CSS for a full page map   */
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+        
+        /* The CSS for the "Fly" button  */
+        #fly {
+            display: block; /* displays over the map */
+            position: relative; /* displays over the map */
+            margin: 0px auto; 
+            width: 50%;
+            height: 40px;
+            padding: 10px;
+            border: none;
+            border-radius: 3px; /* rounded corners */
+            font-size: 12px;
+            text-align: center;
+            font-weight: bold;
+            color: rgb(119, 119, 119);
+            background: rgb(255, 255, 255);
+        }
+    </style>
+</head>
+<body>
+
+    <div id='map'></div>
+    <br/>
+    <button id='fly'>Click for next point</button>
+    
+    
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoiam9tZXJzb24iLCJhIjoiY2o1bXE2bHlyMnJhZDMzbnpyMnhlODdpcSJ9.QJMJ_cTFCY050aZfSn1umQ';
+        
+        /* Variables for the marker and fly-to locations*/
+        var clickCounter = 1; // keep track of the number of times the user has clicked
+        var flyLocations = [[-123.1141475,45.6222102], [-123.1636309,45.6649794], [-123.1820389,45.6974358], [-123.1837657,45.6984897], [-123.1953185,45.7377294], [-123.202992,45.7514721], [-123.2013778,45.7581734], [-123.2304674,45.8107611], [-123.1927814,45.8563327]]; // Where the map will fly to
+        
+        
+        
+        // initialize the map
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/joshuatmason/cmpd6fq8x00b501sn0dfp4n6a',
+            center: flyLocations[0],
+            zoom: 17
+        });
+        
+
+           
+        
+        // Add popups and markers to the map
+        var popup = new mapboxgl.Popup()
+            .setText('Banks Trailhead');
+
+        var marker = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[0]) // put the marker at the first starting position in the flyLocations array [lng, lat]
+            .setPopup(popup) //add the popup to the marker 
+            .addTo(map);
+        
+        var popup2 = new mapboxgl.Popup()
+            .setText('Manning Trailhead');
+
+        var marker2 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[1]) // put the marker at the second starting position in the flyLocations array [lng, lat]
+            .setPopup(popup2) //add the popup to the marker 
+            .addTo(map);
+        
+        var popup3 = new mapboxgl.Popup()
+            .setText('Buxton Trestle');
+
+        var marker3 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[2]) // put the marker at the third starting position in the flyLocations array [lng, lat]
+            .setPopup(popup3) //add the popup to the marker 
+            .addTo(map);
+
+        var popup4 = new mapboxgl.Popup()
+            .setText('Buxton Trailhead');
+
+        var marker4 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[3]) // put the marker at the third starting position in the flyLocations array [lng, lat]
+            .setPopup(popup4) //add the popup to the marker 
+            .addTo(map);
+        
+        var popup5 = new mapboxgl.Popup()
+            .setText('Midpoint');
+
+        var marker5 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[4]) // put the marker at the third starting position in the flyLocations array [lng, lat]
+            .setPopup(popup5) //add the popup to the marker 
+            .addTo(map);
+
+        var popup6 = new mapboxgl.Popup()
+            .setText('High Point');
+
+        var marker6 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[5]) // put the marker at the third starting position in the flyLocations array [lng, lat]
+            .setPopup(popup6) //add the popup to the marker 
+            .addTo(map);
+
+        var popup7 = new mapboxgl.Popup()
+            .setText('Top Hill Trailhead');
+
+        var marker7 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[6]) // put the marker at the third starting position in the flyLocations array [lng, lat]
+            .setPopup(popup7) //add the popup to the marker 
+            .addTo(map);
+
+        var popup8 = new mapboxgl.Popup()
+            .setText('Beaver Creek Trailhead');
+
+        var marker8 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[7]) // put the marker at the third starting position in the flyLocations array [lng, lat]
+            .setPopup(popup8) //add the popup to the marker 
+            .addTo(map);
+
+        var popup9 = new mapboxgl.Popup()
+            .setText('Anderson Park Trailhead');
+
+        var marker9 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[8]) // put the marker at the third starting position in the flyLocations array [lng, lat]
+            .setPopup(popup9) //add the popup to the marker 
+            .addTo(map);
+        
+        // add a 'Listener' to the div with the ID 'fly', that's the button.
+        document.getElementById('fly').addEventListener('click', function () {
+            console.log("flying to " + flyLocations[clickCounter])
+            map.flyTo({
+                center: flyLocations[clickCounter] // look up the value of the click counter in the flyLocations array.
+            });
+
+            // update the click counter to the next location
+            clickCounter = clickCounter +1;
+            if (clickCounter > flyLocations.length-1) clickCounter = 0; // if the user has clicked more times than the length of the flyLocations array, reset it to 0.
+
+        });
+        
+        
+        </script>
+
+</body>
+</html>

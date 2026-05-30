@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Fly to a location</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet' />
+    
+    <style>
+        body { 
+            margin:0; 
+            padding:0; 
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        #map { 
+            position:absolute; 
+            top:0; 
+            bottom:0; 
+            width:100%; 
+        }
+
+        /* RIGHT SIDE INFO PANEL */
+        #infoPanel {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            width: 340px;
+            min-height: 220px;
+
+            padding: 24px;
+
+            background: rgba(255,255,255,0.68);
+            backdrop-filter: blur(10px);
+
+            border-radius: 20px;
+
+            box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+
+            z-index: 2;
+
+            color: rgb(40,40,40);
+
+        }
+
+        #locationTitle {
+            margin-top: 0;
+            margin-bottom: 12px;
+
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        /* LOCATION IMAGE */
+        #locationImage {
+            width: 100%;
+            height: 190px;
+
+            object-fit: cover;
+
+            border-radius: 14px;
+
+            margin-bottom: 16px;
+
+            display: block;
+        }
+
+        #locationDescription {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* BUTTON */
+        #fly {
+            position: absolute;
+
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            width: 240px;
+            height: 52px;
+
+            border: none;
+            border-radius: 16px;
+
+            background: rgba(255,255,255,0.92);
+
+            font-size: 15px;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+
+            cursor: pointer;
+
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+
+            z-index: 2;
+        }
+
+        #fly:hover {
+            background: rgba(245,245,245,0.95);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id='map'></div>
+
+    <!-- INFO PANEL -->
+    <div id="infoPanel">
+        <h1 id="locationTitle">Banks Trailhead</h1>
+
+        <img id="locationImage" src="images/oregon_american_mill.jpg" alt="Location image">
+
+        <div id="locationDescription">
+            You are a 1920s Oregon-American Lumber Company employee.
+            The logging industry in Vernonia, Oregon is booming. 
+            You have hopped on the train heading North on the railway that is the present day Banks-Vernonia State Trail.
+            Along the way you hear a group of loggers gathered around playing a popular 1850s melody known as "Angeline the Baker".
+        </div>
+    </div>
+
+    <!-- BUTTON -->
+    <button id='fly'>Click for next point</button>
+    
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zaHVhdG1hc29uIiwiYSI6ImNtbmh5a3IzdjA3Z2oycnE1c2R0bWRxMWQifQ.nygTHzVrREgrtl_DBWkLmg';
+        
+        /* Variables for the marker and fly-to locations */
+        var clickCounter = 1; // keep track of the number of times the user has clicked
+        
+        var flyLocations = [
+            [-123.1141475,45.6222102],
+            [-123.1636309,45.6649794],
+            [-123.1820389,45.6974358],
+            [-123.1837657,45.6984897],
+            [-123.1953185,45.7377294],
+            [-123.202992,45.7514721],
+            [-123.2013778,45.7581734],
+            [-123.2304674,45.8107611],
+            [-123.1927814,45.8563327],
+            [-123.1746, 45.85699]
+        ]; // Where the map will fly to
+
+        var locationTitles = [
+            "Banks Trailhead",
+            "Manning Trailhead",
+            "Buxton Trestle",
+            "Buxton Trailhead",
+            "Midpoint",
+            "High Point",
+            "Top Hill Trailhead",
+            "Beaver Creek Trailhead",
+            "Anderson Park Trailhead",
+            "Vernonia Lake"
+        ];
+
+        var locationDescriptions = [
+            "Write description for Banks Trailhead here.",
+            "Lumberjacks in the 1920s were cutting thousands of acres of PNW old-growth forests. The OA Lumber Company employed nearly 1,000 workers across their lumber camps. Many old growth trees would require more than one person to cut. A common folk song heard in 1920s logging camps was 'Soldier's Joy'.",
+            "The original Buxton Trestle was constructed between 1919 and 1921. To make it to the mill in Vernonia, you would have ridden across it. As lumberjacks rode the train across this massive structure, they may have sang 'She'll be Coming 'Round the Mountain,' which began as an African American spiritual song from the late 1800s.",
+            "The railroad was essential for the transportation of timber across many miles to the mill. Temporary camps were often placed right along the tracks. Songs like Elizabeth Cotten's 'Freight Train' (written in the early 1900s) evoke a nostalgic perspective on life near the railroad.",
+            "Write description for Midpoint here.",
+            "Write description for High Point here.",
+            "Write description for Top Hill Trailhead here.",
+            "Write description for Beaver Creek Trailhead here.",
+            "Write description for Anderson Park Trailhead here.",
+            "Write description for Vernonia Lake here."
+        ];
+        
+        var locationImages = [
+            "images/oregon_american_mill.jpg",
+            "images/cutting_tree.jpg",
+            "images/trestle.jpeg",
+            "images/logging_camp.jpg",
+            "images/log_river_drive.jpg",
+            "images/log_raft.jpg",
+            "images/logging_truck.jpg",
+            "images/lumber_employees.jpg",
+            "images/steam_donkey.jpg",
+            "images/logged_land.jpg"
+        ];
+
+        // initialize the map
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/joshuatmason/cmpd6fq8x00b501sn0dfp4n6a',
+            center: flyLocations[0],
+            zoom: 17
+        });
+        
+        // Add popups and markers to the map
+        var popup = new mapboxgl.Popup()
+            .setText('Banks Trailhead');
+
+        var marker = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[0]) // put the marker at the first starting position in the flyLocations array [lng, lat]
+            .setPopup(popup) //add the popup to the marker 
+            .addTo(map);
+        
+        var popup2 = new mapboxgl.Popup()
+            .setText('Manning Trailhead');
+
+        var marker2 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[1]) // put the marker at the second starting position in the flyLocations array [lng, lat]
+            .setPopup(popup2) //add the popup to the marker 
+            .addTo(map);
+        
+        var popup3 = new mapboxgl.Popup()
+            .setText('Buxton Trestle');
+
+        var marker3 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[2]) // put the marker at the third starting position in the flyLocations array [lng, lat]
+            .setPopup(popup3) //add the popup to the marker 
+            .addTo(map);
+
+        var popup4 = new mapboxgl.Popup()
+            .setText('Buxton Trailhead');
+
+        var marker4 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[3]) // put the marker at the fourth starting position in the flyLocations array [lng, lat]
+            .setPopup(popup4) //add the popup to the marker 
+            .addTo(map);
+        
+        var popup5 = new mapboxgl.Popup()
+            .setText('Midpoint');
+
+        var marker5 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[4]) // put the marker at the fifth starting position in the flyLocations array [lng, lat]
+            .setPopup(popup5) //add the popup to the marker 
+            .addTo(map);
+
+        var popup6 = new mapboxgl.Popup()
+            .setText('High Point');
+
+        var marker6 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[5]) // put the marker at the sixth starting position in the flyLocations array [lng, lat]
+            .setPopup(popup6) //add the popup to the marker 
+            .addTo(map);
+
+        var popup7 = new mapboxgl.Popup()
+            .setText('Top Hill Trailhead');
+
+        var marker7 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[6]) // put the marker at the seventh starting position in the flyLocations array [lng, lat]
+            .setPopup(popup7) //add the popup to the marker 
+            .addTo(map);
+
+        var popup8 = new mapboxgl.Popup()
+            .setText('Beaver Creek Trailhead');
+
+        var marker8 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[7]) // put the marker at the eighth starting position in the flyLocations array [lng, lat]
+            .setPopup(popup8) //add the popup to the marker 
+            .addTo(map);
+
+        var popup9 = new mapboxgl.Popup()
+            .setText('Anderson Park Trailhead');
+
+        var marker9 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[8]) // put the marker at the ninth starting position in the flyLocations array [lng, lat]
+            .setPopup(popup9) //add the popup to the marker 
+            .addTo(map);
+
+        var popup10 = new mapboxgl.Popup()
+            .setText('Vernonia Lake');
+
+        var marker10 = new mapboxgl.Marker({color:'DarkRed'})
+            .setLngLat(flyLocations[9]) // put the marker at the tenth starting position in the flyLocations array [lng, lat]
+            .setPopup(popup10) //add the popup to the marker 
+            .addTo(map);
+        
+        // add a listener to button
+        document.getElementById('fly').addEventListener('click', function () {
+
+            // Fly to next point
+            map.flyTo({
+                center: flyLocations[clickCounter],
+                zoom: 17,
+                speed: 0.8
+            });
+
+            // Update title
+            document.getElementById('locationTitle').innerHTML =
+                locationTitles[clickCounter];
+
+            // Update paragraph
+            document.getElementById('locationDescription').innerHTML =
+                locationDescriptions[clickCounter];
+
+            // Update image
+            document.getElementById('locationImage').src =
+                locationImages[clickCounter];
+
+            // Move to next point
+            clickCounter++;
+
+            // Loop back to start
+            if (clickCounter >= flyLocations.length) {
+                clickCounter = 0;
+            }
+        });
+        
+    </script>
+
+</body>
+</html>

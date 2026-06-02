@@ -115,11 +115,14 @@
         <img id="locationImage" src="images/oregon_american_mill.jpg" alt="Location image">
 
         <div id="locationDescription">
-            You are a 1920s Oregon-American Lumber Company employee.
-            The logging industry in Vernonia, Oregon is booming. 
-            You have hopped on the train heading North on the railway that is the present day Banks-Vernonia State Trail.
-            Along the way you hear a group of loggers gathered around playing a popular 1850s melody known as "Angeline the Baker".
+            In the 1920s, the logging industry in Vernonia, Oregon was booming. 
+            At the modern day Banks Trailhead, employees may have hopped on the train and ridden to the timber mill 20 miles North in Vernonia.
+            Along the way, you may have heard this popular 1800s melody known as "Blackberry Blossom".
         </div>
+
+        <audio id="locationAudio" controls><source src="songs/blackberry.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+
+
     </div>
 
     <!-- BUTTON -->
@@ -158,16 +161,16 @@
         ];
 
         var locationDescriptions = [
-            "Write description for Banks Trailhead here.",
-            "Lumberjacks in the 1920s were cutting thousands of acres of PNW old-growth forests. The OA Lumber Company employed nearly 1,000 workers across their lumber camps. Many old growth trees would require more than one person to cut. A common folk song heard in 1920s logging camps was 'Soldier's Joy'.",
-            "The original Buxton Trestle was constructed between 1919 and 1921. To make it to the mill in Vernonia, you would have ridden across it. As lumberjacks rode the train across this massive structure, they may have sang 'She'll be Coming 'Round the Mountain,' which began as an African American spiritual song from the late 1800s.",
+            "In the 1920s, the logging industry in Vernonia, Oregon was booming. At the modern day Banks Trailhead, employees may have hopped on the train and ridden to the timber mill 20 miles North in Vernonia. Along the way, you may have heard this popular 1800s melody known as 'Blackberry Blossom'.",
+            "Lumberjacks in the 1920s were cutting thousands of acres of PNW old-growth forests. The OA Lumber Company employed nearly 1,000 workers across their lumber camps. Many old growth trees would require more than one person to cut. Another common folk melody heard during this time is now known as 'Cumberland Gap'.",
+            "The original Buxton Trestle was constructed between 1919 and 1921. To make it to the mill in Vernonia, you would have ridden across it. As lumberjacks rode the train across this massive structure, they may have sang 'Wildwood Flower' for the many wildflowers in the valley beneath the trestle.",
             "The railroad was essential for the transportation of timber across many miles to the mill. Temporary camps were often placed right along the tracks. Songs like Elizabeth Cotten's 'Freight Train' (written in the early 1900s) evoke a nostalgic perspective on life near the railroad.",
-            "Write description for Midpoint here.",
-            "Write description for High Point here.",
-            "Write description for Top Hill Trailhead here.",
-            "Write description for Beaver Creek Trailhead here.",
-            "Write description for Anderson Park Trailhead here.",
-            "Write description for Vernonia Lake here."
+            "Midpoint Description",
+            "description",
+            "description",
+            "description",
+            "description",
+            "description"
         ];
         
         var locationImages = [
@@ -182,6 +185,12 @@
             "images/steam_donkey.jpg",
             "images/logged_land.jpg"
         ];
+
+        var locationAudio = [
+            "songs/blackberry.mp3",
+            "songs/cumberland_gap.mp3",
+            "songs/wildwood_flower.mp3"
+        ]
 
         // initialize the map
         var map = new mapboxgl.Map({
@@ -293,6 +302,11 @@
             // Update image
             document.getElementById('locationImage').src =
                 locationImages[clickCounter];
+
+            // Update audio
+            var audio = document.getElementById("locationAudio");
+            audio.src = locationAudio[clickCounter];
+            audio.load();
 
             // Move to next point
             clickCounter++;

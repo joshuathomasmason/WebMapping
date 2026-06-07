@@ -101,6 +101,154 @@
         #fly:hover {
             background: rgba(245,245,245,0.95);
         }
+
+        /* MAP TITLE */
+        #mapTitle {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(8px);
+
+            padding: 16px 22px;
+
+            border-radius: 14px;
+
+            font-size: 24px;
+            font-weight: bold;
+
+            z-index: 3;
+
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        /* DESCRIPTION BOX */
+        #mapDescription {
+            position: absolute;
+
+            top: 100px;
+            left: 30px;
+
+            width: 320px;
+
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(8px);
+
+            padding: 20px;
+
+            border-radius: 16px;
+
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+
+            z-index: 3;
+        }
+
+        /* CLOSE BUTTON */
+        #closeDescription {
+            position: absolute;
+
+            top: 10px;
+            right: 12px;
+
+            border: none;
+            background: none;
+
+            font-size: 22px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        #closeDescription:hover {
+            opacity: 0.6;
+        }
+
+        /* SOURCES PANEL */
+        #sourcesPanel {
+            position: absolute;
+
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            width: 700px;
+            max-height: 70vh;
+
+            overflow-y: auto;
+
+            padding: 24px;
+
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+
+            border-radius: 20px;
+
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+
+            z-index: 10;
+
+            display: none;
+        }
+
+        #closeSources {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+
+            border: none;
+            background: none;
+
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        #imageCredit {
+            margin-top: -8px;
+            margin-bottom: 16px;
+
+            font-size: 11px;
+            line-height: 1.3;
+
+            color: #555;
+        }
+
+        #imageCredit a {
+            color: #555;
+            text-decoration: underline;
+        }
+
+        #imageCredit a:hover {
+            color: #000;
+        }
+
+        #creditsButton {
+            position: absolute;
+
+            bottom: 40px;
+            left: 40px;
+
+            padding: 10px 16px;
+
+            border: none;
+            border-radius: 12px;
+
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(8px);
+
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+
+            cursor: pointer;
+
+            z-index: 5;
+
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        #creditsButton:hover {
+            background: rgba(245,245,245,0.95);
+        }
     </style>
 </head>
 
@@ -108,11 +256,43 @@
 
     <div id='map'></div>
 
+    <!-- MAP TITLE -->
+    <div id="mapTitle">
+        Songs Along the Railroad
+    </div>
+
+    <!-- DESCRIPTION BOX -->
+    <div id="mapDescription">
+
+        <button id="closeDescription">×</button>
+
+        <h3 style="margin-top:0;">
+            About this Map
+        </h3>
+
+        <p>
+            This map examines the present day Banks-Vernonia State Trail 
+            through the perspective of a potential musical history. Specifically, 
+            this map provides recordings of common folk melodies that were 
+            popular in the PNW during the 1920s when the Oregon-American 
+            Lumber Company was operating a railway to accomodate the large 
+            lumber industry in the area. This map invites you to imagine what 
+            songs you may have encountered along the railway as a 1920s lumber 
+             worker on an iconic path that is now marked in the present day by 
+            trailheads and serves as a paved bike/walking trail.
+        </p>
+
+    </div>
+
     <!-- INFO PANEL -->
     <div id="infoPanel">
         <h1 id="locationTitle">Banks Trailhead</h1>
 
         <img id="locationImage" src="images/oregon_american_mill.jpg" alt="Location image">
+
+        <div id="imageCredit">Source:<a href="https://www.oregonencyclopedia.org/articles/oregon_american_lumber_company/"
+            target="_blank">
+            The Oregon Encyclopedia, "Oregon-American Lumber Company"</a></div>
 
         <div id="locationDescription">
             In the 1920s, the logging industry in Vernonia, Oregon was booming. 
@@ -122,6 +302,53 @@
 
         <audio id="locationAudio" controls><source src="songs/blackberry.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
 
+
+    </div>
+
+    <button id="creditsButton">Credits</button>
+
+    <div id="sourcesPanel">
+
+        <button id="closeSources">×</button>
+
+        <h2>Sources & Credits</h2>
+
+        <p>
+            Historical information and geographic data was compiled from:
+        </p>
+
+        <ul>
+            <li>Trail Data: Oregon Department of Forestry, Protection Map: Trails (Layer 38) GIS dataset, accessed May 2026. https://gis.odf.oregon.gov/ags3/rest/services/Basemaps/ProtectionMap/MapServer/38</li>
+            <li>Trailhead Markers: Google Maps, https://www.google.com/maps</li>
+            <li>Oregon Encyclopedia, https://www.oregonencyclopedia.org/articles/oregon_american_lumber_company/</li>
+            <li>TrailLink, https://www.traillink.com/trail-history/banks-vernonia-state-trail/</li>
+            <li>The Brotherhood of Timber Workers 1910-1913: A Radical Response to Industrial Capitalism in the Southern U. S. A., https://www.jstor.org/stable/650194</li>
+            <li>Library of Congress, https://www.loc.gov/collections/henry-reed-fiddle-tunes/articles-and-essays/the-historical-and-cultural-significance-of-fiddle-tunes-of-the-old-frontier/</li>
+        </ul>
+
+        <p>
+            Music references recorded by Joshua T. Mason:
+        </p>
+
+        <ul>
+            <li>"Blackberry Blossom" (traditional)</li>
+            <li>"Cripple Creek" (traditional)</li>
+            <li>"Wildwood Flower" (traditional)</li>
+            <li>"Angeline The Baker (traditional)</li>
+            <li>"Smith Reel" (traditional)</li>
+            <li>"Bonaparte's Retreat" (traditional)</li>
+            <li>"Little Red Dog Comes Trotting Through the Meeting House" (traditional)</li>
+            <li>"The Girl I Left Behind Me" (traditional)</li>
+            <li>"New Camptown Races" (traditional)</li>
+            <li>"Whiskey Before Breakfast" (traditional)</li>
+
+        </ul>
+
+        <p>
+            Historical photographs used throughout the project were obtained
+            from The Oregon Encyclopedia, “Oregon-American Lumber Company,” https://www.oregonencyclopedia.org/articles/oregon_american_lumber_company/ 
+            and the Oregon History Project, https://www.oregonhistoryproject.org.
+        </p>
 
     </div>
 
@@ -162,15 +389,15 @@
 
         var locationDescriptions = [
             "In the 1920s, the logging industry in Vernonia, Oregon was booming. At the modern day Banks Trailhead, employees may have hopped on the train and ridden to the timber mill 20 miles North in Vernonia. Along the way, you may have heard this popular 1800s melody known as 'Blackberry Blossom'.",
-            "Lumberjacks in the 1920s were cutting thousands of acres of PNW old-growth forests. The OA Lumber Company employed nearly 1,000 workers across their lumber camps. Many old growth trees would require more than one person to cut. Another common folk melody heard during this time is now known as 'Cumberland Gap'.",
+            "Lumberjacks in the 1920s were cutting thousands of acres of PNW old-growth forests. The OA Lumber Company employed nearly 1,000 workers across their lumber camps. Many old growth trees would require more than one person to cut. Another common folk melody heard during this time is now known as 'Cripple Creek'.",
             "The original Buxton Trestle was constructed between 1919 and 1921. To make it to the mill in Vernonia, you would have ridden across it. As lumberjacks rode the train across this massive structure, they may have sang 'Wildwood Flower' for the many wildflowers in the valley beneath the trestle.",
-            "The railroad was essential for the transportation of timber across many miles to the mill. Temporary camps were often placed right along the tracks. Songs like Elizabeth Cotten's 'Freight Train' (written in the early 1900s) evoke a nostalgic perspective on life near the railroad.",
-            "Midpoint Description",
-            "description",
-            "description",
-            "description",
-            "description",
-            "description"
+            "The railroad was essential for the transportation of timber across many miles to the mill. Temporary camps were often placed right along the tracks. Songs like 'Angeline the Baker' evoke a nostalgic sound for a time when many spent life near the railroad.",
+            "Here at the midpoint, there may have been a camp to stop where equipment would be dropped off and more lumber could have been loaded. Halfway to your journey's end, you might have wanted to hear the joyful melody of 'Smith Reel'.",
+            "At the highest point along the present day trail, there is often snow and ice during the winter months. This made moving lumber on logging roads difficult. Alternative methods of hauling used log rafts that floated along rivers and channels to the mill. The melody in the tune 'Bonaparte's Retreat' has a meloncholic character to it that is reminiscient of a cold winter day.",
+            "Present-day Top Hill Trailhead is nestled deep within a heavily wooded area. Lumber companies had various camps set up throughout the beautiful old growth forests of the PNW where they began logging. These camps were sometimes the size of towns, and they would gather the many hands together to organize a plan in meetings. Here is a melody to the old fiddle tune, 'Little Red Dog Comes Trotting Through the Meeting House'.",
+            "As a lumber employee, typically you would have worked alongside an all-male personelle/crew. Groups varied in size, but looked very similar to the image above. Many left behind their families for long contracts and sent money home. Here is the melody to a traditional song called 'The Girl I Left Behind Me'.",
+            "Steam not only enable the function of the railway, but also to some innovative tools like the steam donkey. These machines were strong mechanical wenches that assisted lumber workers in moving around and pulling heavy materials. A wishful lumber worker may have imagined a steam donkey that moves extra fast. They may have heard the lively melody of 'New Camptown Races' in their head.",
+            "By the time the Oregon-American Lumber Company closed its operations in Vernonia in the year 1957, many old-growth forests in the PNW had been decimated by clear cutting. Saddened by their contribution to this reality, a now retired lumber worker may have looked upon the clear cut valleys and played the tune 'Whiskey Before Breakfast'."
         ];
         
         var locationImages = [
@@ -186,10 +413,36 @@
             "images/logged_land.jpg"
         ];
 
+        var imageCredits = [
+
+            `Source: <a href="https://www.oregonencyclopedia.org/articles/oregon_american_lumber_company/" target="_blank">The Oregon Encyclopedia, "Oregon-American Lumber Company"</a>`,
+
+            `Source: <a href="https://www.oregonhistoryproject.org/articles/historical-records/timbermen-using-chainsaw-lacomb/" target="_blank">Oregon History Project</a>`,
+
+            `Source: <a href="https://washingtoncountyheritage.org/s/wcho/item/46492#lg=1&slide=0" target="_blank">Oregon History Project</a>`,
+
+            `Source: <a href="https://www.oregonhistoryproject.org/articles/historical-records/camp-two-coos-bay-lumber-company/" target="_blank">Oregon History Project</a>`,
+
+            `Source: <a href="https://www.oregonhistoryproject.org/articles/historical-records/wind-river-log-drive/" target="_blank">Oregon History Project</a>`,
+            `Source: <a href="https://www.oregonhistoryproject.org/articles/historical-records/log-rafts-1902/" target="_blank">Oregon History Project</a>`,
+            `Source: <a href="https://www.oregonhistoryproject.org/articles/historical-records/log-truck-stirs-dust-through-clearcut/" target="_blank">Oregon History Project</a>`,
+            `Source: <a href="https://www.oregonencyclopedia.org/articles/oregon_american_lumber_company/" target="_blank">The Oregon Encyclopedia, "Oregon-American Lumber Company"</a>`,
+            `Source: <a href="https://www.oregonhistoryproject.org/articles/historical-records/coos-bay-lumber-company-steam-donkeys/" target="_blank">Oregon History Project</a>`,
+            `Source: <a href="https://www.oregonhistoryproject.org/articles/historical-records/logged-off-land-near-neahkahnie-mountain-1968/" target="_blank">Oregon History Project</a>`
+
+        ];
+
         var locationAudio = [
             "songs/blackberry.mp3",
-            "songs/cumberland_gap.mp3",
-            "songs/wildwood_flower.mp3"
+            "songs/cripple_creek.mp3",
+            "songs/wildwood_flower.mp3",
+            "songs/angeline-the-baker.mp3",
+            "songs/smith_reel.mp3",
+            "songs/bonapartes-retreat.mp3",
+            "songs/little-red-dog.mp3",
+            "songs/girl-left-behind.mp3",
+            "songs/new-camptown-races.mp3",
+            "songs/whiskey-before-breakfast.mp3"
         ]
 
         // initialize the map
@@ -284,37 +537,51 @@
         // add a listener to button
         document.getElementById('fly').addEventListener('click', function () {
 
-            // Fly to next point
             map.flyTo({
                 center: flyLocations[clickCounter],
                 zoom: 17,
                 speed: 0.8
             });
 
-            // Update title
             document.getElementById('locationTitle').innerHTML =
                 locationTitles[clickCounter];
 
-            // Update paragraph
             document.getElementById('locationDescription').innerHTML =
                 locationDescriptions[clickCounter];
 
-            // Update image
             document.getElementById('locationImage').src =
                 locationImages[clickCounter];
 
-            // Update audio
+            document.getElementById('imageCredit').innerHTML =
+                imageCredits[clickCounter];
+
             var audio = document.getElementById("locationAudio");
             audio.src = locationAudio[clickCounter];
             audio.load();
 
-            // Move to next point
+            // Move to next location
             clickCounter++;
 
-            // Loop back to start
+            // Loop back to Banks from Vernonia
             if (clickCounter >= flyLocations.length) {
+
                 clickCounter = 0;
             }
+        });
+
+        // Close description box
+        document.getElementById("closeDescription").addEventListener("click", function() {
+            document.getElementById("mapDescription").style.display = "none";
+        });
+
+        // Close sources
+        document.getElementById("closeSources").addEventListener("click", function () {
+            document.getElementById("sourcesPanel").style.display = "none";
+        });
+
+        // Credits button
+        document.getElementById("creditsButton").addEventListener("click", function () {
+            document.getElementById("sourcesPanel").style.display = "block";
         });
         
     </script>

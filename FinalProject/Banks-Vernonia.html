@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Fly to a location</title>
+    <title>Banks Vernonia Music History Map</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet' />
@@ -305,6 +305,7 @@
 
     </div>
 
+    <!-- SOURCES PANEL -->
     <button id="creditsButton">Credits</button>
 
     <div id="sourcesPanel">
@@ -445,12 +446,29 @@
             "songs/whiskey-before-breakfast.mp3"
         ]
 
+        var imageAltText = [
+            "Historic Oregon American Lumber Company mill in Vernonia",
+            "Loggers cutting a large tree in Oregon forest",
+            "Historic Buxton Trestle railroad bridge",
+            "Logging camp near railroad operations",
+            "Workers conducting a river log drive",
+            "Log rafts transporting timber",
+            "Historic logging truck in forest",
+            "Oregon American Lumber Company employees",
+            "Steam donkey logging machine",
+            "Clear-cut forest landscape"
+        ];
+
         // initialize the map
         var map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/joshuatmason/cmpd6fq8x00b501sn0dfp4n6a',
             center: flyLocations[0],
-            zoom: 17
+            zoom: 17,
+            maxBounds: [
+                [-123.35, 45.55],
+                [-123.05, 45.90]
+            ]
         });
         
         // Add popups and markers to the map
@@ -583,8 +601,11 @@
         document.getElementById("creditsButton").addEventListener("click", function () {
             document.getElementById("sourcesPanel").style.display = "block";
         });
+
+        // Update alt text of images for accessibility
+        document.getElementById('locationImage').alt =
+            imageAltText[clickCounter];
         
     </script>
-
 </body>
 </html>
